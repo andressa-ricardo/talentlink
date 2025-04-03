@@ -34,5 +34,9 @@ public class Company {
         this.password = password;
         this.linkedin = linkedin;
     }
+
+    public Company(){
+
+    }
 }
 

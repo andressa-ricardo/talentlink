@@ -7,6 +7,7 @@ import com.talentlink.talentlink.domain.user.User;
 import com.talentlink.talentlink.infra.security.TokenService;
 import com.talentlink.talentlink.repositories.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    @Qualifier("userAuthenticationManager")
+    private AuthenticationManager userAuthenticationManager;
 
     @Autowired
     private TokenService tokenService;
@@ -32,7 +34,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
+        var auth = userAuthenticationManager.authenticate(usernamePassword);
 
         var user = userRepository.findByEmail(data.email());
         if (user == null) {

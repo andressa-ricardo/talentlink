@@ -47,7 +47,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = encryptedPassword;
         this.role = role;
-        this.activated = true; // ou false, se quiser que usuários ativem a conta depois
+        this.activated = true;
     }
 
 

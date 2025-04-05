@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager companyAuthenticationManager;
 
     @Autowired
     private TokenService tokenService;
@@ -31,7 +31,7 @@ public class CompanyController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
+        var auth = companyAuthenticationManager.authenticate(usernamePassword);
 
         var company = companyRepository.findByEmail(data.email());
         if (company == null) {

@@ -1,7 +1,7 @@
 package com.talentlink.talentlink.controllers.user;
 
-import com.talentlink.talentlink.domain.Role;
-import com.talentlink.talentlink.domain.user.AuthenticationDTO;
+import com.talentlink.talentlink.domain.enums.Role;
+import com.talentlink.talentlink.domain.AuthenticationDTO;
 import com.talentlink.talentlink.domain.user.UserRegisterDTO;
 import com.talentlink.talentlink.domain.user.User;
 import com.talentlink.talentlink.infra.security.TokenService;

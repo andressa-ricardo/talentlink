@@ -1,6 +1,6 @@
 package com.talentlink.talentlink.domain.user;
 
-import com.talentlink.talentlink.domain.Role;
+import com.talentlink.talentlink.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

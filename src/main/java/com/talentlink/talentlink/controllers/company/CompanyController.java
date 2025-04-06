@@ -1,7 +1,7 @@
 package com.talentlink.talentlink.controllers.company;
 
 import com.talentlink.talentlink.domain.company.CompanyRegisterDTO;
-import com.talentlink.talentlink.domain.user.AuthenticationDTO;
+import com.talentlink.talentlink.domain.AuthenticationDTO;
 import com.talentlink.talentlink.domain.company.Company;
 import com.talentlink.talentlink.infra.security.TokenService;
 import com.talentlink.talentlink.repositories.company.CompanyRepository;

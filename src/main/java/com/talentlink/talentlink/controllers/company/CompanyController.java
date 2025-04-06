@@ -1,6 +1,6 @@
 package com.talentlink.talentlink.controllers.company;
 
-import com.talentlink.talentlink.domain.company.CompanyRegisterDTO;
+import com.talentlink.talentlink.dtos.company.CompanyRegisterDTO;
 import com.talentlink.talentlink.domain.AuthenticationDTO;
 import com.talentlink.talentlink.domain.company.Company;
 import com.talentlink.talentlink.infra.security.TokenService;
@@ -60,6 +60,6 @@ public class CompanyController {
         companyRepository.save(newCompany);
 
         String token = tokenService.generateToken(newCompany);
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body(newCompany);
     }
 }

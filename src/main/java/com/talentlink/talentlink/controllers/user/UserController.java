@@ -52,10 +52,10 @@ public class UserController {
         }
 
         String encryptedPassword = passwordEncoder.encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword, Role.USER);
+        User newUser = new User(data.email(), encryptedPassword, data.role());
         userRepository.save(newUser);
 
         String token = tokenService.generateToken(newUser);
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body(newUser);
     }
 }

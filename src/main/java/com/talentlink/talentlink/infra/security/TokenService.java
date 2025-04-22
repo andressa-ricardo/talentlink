@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collections;
 
 @Service
 public class TokenService {
@@ -33,6 +34,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer(issuer)
                     .withSubject(subject)
+                    .withClaim("authorities", Collections.singletonList("ROLE_" + issuer))
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -51,6 +53,7 @@ public class TokenService {
         } catch (JWTVerificationException exception) {
             return "";
         }
+
     }
 
     private Instant genExpirationDate() {

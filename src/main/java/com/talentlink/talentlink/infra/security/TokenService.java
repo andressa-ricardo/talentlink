@@ -7,18 +7,39 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.talentlink.talentlink.domain.company.Company;
 import com.talentlink.talentlink.domain.user.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;
+
+    public Collection<SimpleGrantedAuthority> getAuthoritiesFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return Arrays.stream(JWT.require(algorithm)
+                            .withIssuer("USER", "COMPANY")
+                            .build()
+                            .verify(token)
+                            .getClaim("authorities")
+                            .asArray(String.class))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+        } catch (JWTVerificationException exception) {
+            return null;
+        }
+    }
+
 
     public String generateToken(User user) {
         return generateToken(user.getEmail(), "USER");
@@ -46,14 +67,13 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("USER", "COMPANY") // aceita os dois
+                    .withIssuer("USER", "COMPANY")
                     .build()
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception) {
             return "";
         }
-
     }
 
     private Instant genExpirationDate() {
